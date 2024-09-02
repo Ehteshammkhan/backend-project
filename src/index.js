@@ -8,18 +8,20 @@ dotenv.config({
 
 connectDB()
   .then(() => {
-    app.listen(process.env.PORT || 8000, () => {
-      console.log(`Server is runing at port: ${process.env.PORT}`);
-    });
-    // Global error handling for Express app
-    app.on("error", (error) => {
-      console.log("Express error occurred:", error);
-      throw error;
+    const port = process.env.PORT || 8000;
+    app.listen(port, () => {
+      console.log(`Server is running at port: ${port}`);
     });
   })
   .catch((err) => {
-    console.log("Mongo DB connection faild !!!", err);
+    console.log("MongoDB connection failed !!!", err);
   });
+
+// Express global error handler middleware (recommended way)
+app.use((err, req, res, next) => {
+  console.error("Express error occurred:", err);
+  res.status(500).send("Internal Server Error");
+});
 
 /*
 // Define a route for the root URL
