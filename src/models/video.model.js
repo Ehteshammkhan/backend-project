@@ -35,6 +35,12 @@ const videoShema = new Schema(
       type: Number,
       default: true,
     },
+    awner: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
   },
   {
     timestamps: true,
